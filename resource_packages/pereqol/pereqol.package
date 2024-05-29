@@ -1,0 +1,11 @@
+mod = [
+	"pereqol"
+]
+
+package = [
+	"resource_packages/pereqol/pereqol"
+]
+
+lua = [
+	"scripts/mods/pereqol/*"
+]
