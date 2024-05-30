@@ -3,9 +3,9 @@ local mod = get_mod("pereqol")
 
 -- disable being catapulted when enemies drop at you
 -- stopped working since 5.5.0 update dropped
-mod:hook(BTClimbAction, "_catapult_players", function(func, self, unit, blackboard, data)
-    return
-end)
+-- mod:hook(BTClimbAction, "_catapult_players", function(func, self, unit, blackboard, data)
+--     return
+-- end)
 
 local function has_value (tab, val)
     for index, value in ipairs(tab) do
@@ -42,8 +42,8 @@ mod:hook(DeusRunController, "setup_run", function(func, self, run_seed, difficul
     func(self, run_seed, difficulty, journey_name, dominant_god, initial_own_soft_currency, telemetry_id, with_belakor, mutators, boons)
 end)
 
-
-
+mod:dofile("scripts/mods/pereqol/maps/createunit")
+ 
 mod.on_all_mods_loaded = function()
     
     local Peregrinaje = get_mod("Peregrinaje")
@@ -71,6 +71,7 @@ mod.on_all_mods_loaded = function()
 
             
             mod:dofile("scripts/mods/pereqol/rebal/talents")
+            mod:dofile("scripts/mods/pereqol/climbing_enemies")
             
             mod:rebal_changes()
             -- add to TalentTrees

@@ -4,7 +4,7 @@ local pmod = get_mod("Peregrinaje")
 mod.init_elf = function(self)
 
     -- more ammo
-    BuffTemplates.kerillian_waywatcher_passive_increased_ammunition.buffs[1].multiplier = 2.5
+    BuffTemplates.kerillian_waywatcher_passive_increased_ammunition.buffs[1].multiplier = 2.0
 
     BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].duration = 6
     BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].multiplier  = 0.2

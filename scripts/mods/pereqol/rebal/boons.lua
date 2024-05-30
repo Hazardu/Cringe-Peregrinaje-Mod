@@ -1,6 +1,10 @@
 local mod = get_mod("pereqol")
 local pmod = get_mod("Peregrinaje")
 
+BuffTemplates.multishoot_active_speed.buffs[1].bonus = 2
+BuffTemplates.multishoot_active_speed.buffs[2].multiplier = 0.15
+BuffTemplates.multishoot_active_speed.buffs[3].multiplier = -0.15
+
 BuffTemplates.multishoot_active_reload.buffs[1].bonus = 2
 BuffTemplates.multishoot_active_reload.buffs[2].multiplier = 0.15
 BuffTemplates.multishoot_active_reload.buffs[3].multiplier = -0.15

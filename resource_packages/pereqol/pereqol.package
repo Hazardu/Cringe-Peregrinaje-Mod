@@ -9,3 +9,15 @@ package = [
 lua = [
 	"scripts/mods/pereqol/*"
 ]
+
+unit = [
+  "units/*"
+]
+
+material = [
+  "materials/*"
+]  
+
+texture = [
+  "textures/*"
+]

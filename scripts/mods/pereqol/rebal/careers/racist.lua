@@ -29,14 +29,15 @@ mod.init_victor = function(self)
 
     -- 6-3 has been removed by isaakk
     mod:add_talent_buff_template("witch_hunter", "victor_bountyhunter_activated_ability_blast_shotgun_cdr", {
-        multiplier = -0.3,
+        multiplier = -0.20,
         stat_buff = "activated_cooldown",
     })
-    pmod:add_text("victor_bountyhunter_activated_ability_blast_shotgun_desc", "Modifies Victor's sidearm to fire two blasts of shield-penetrating pellets in a devastating cone. Reduces cooldown of Locked and Loaded by 30%%.")
+    pmod:add_text("victor_bountyhunter_activated_ability_blast_shotgun_desc", "Modifies Victor's sidearm to fire two blasts of shield-penetrating pellets in a devastating cone. Reduces cooldown of Locked and Loaded by 25%%. Gain 5%% ammo on ranged citical hit.")
     mod:modify_talent("wh_bountyhunter", 6, 3, {
         buffs = {
             "victor_bountyhunter_activated_ability_blast_shotgun",
             "victor_bountyhunter_activated_ability_blast_shotgun_cdr",
+            "traits_ranged_replenish_ammo_on_crit",
         },
     })
     -- BuffTemplates.victor_bountyhunter_activated_ability_blast_shotgun.buffs[1].multiplier = -0.3
@@ -57,14 +58,5 @@ mod.init_victor = function(self)
     --     description = "cringemod_victor_bountyhunter_activated_ability_reset_cooldown_on_stacks_2_desc",
     -- })
 
-
-    pmod:add_text("cringemod_victor_bountyhunter_power_burst_on_no_ammo_scrounger_desc", "When you fire your last shot, gain 15%% power and attack speed for 15 seconds. Additionally you gain 5%% ammo on ranged critical hit. Stacks with 'Scrounger'.")
-    mod:modify_talent("wh_bountyhunter", 2, 2, {
-        description = "cringemod_victor_bountyhunter_power_burst_on_no_ammo_scrounger_desc",
-        buffs = {
-            "victor_bountyhunter_increased_melee_damage_on_no_ammo_add",
-            "traits_ranged_replenish_ammo_on_crit"
-        },
-    })
 
 end

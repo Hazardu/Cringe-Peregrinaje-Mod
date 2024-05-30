@@ -1,0 +1,17 @@
+actors = [
+    {
+        enabled = true
+        mass = 0
+        name = "CubeWide"
+        node = "CubeWide"
+        shapes = [
+            {
+                material = "default"
+                shape = "CubeWide"
+                template = "default"
+                type = "mesh"
+            }
+        ]
+        template = "static"
+    }
+]
