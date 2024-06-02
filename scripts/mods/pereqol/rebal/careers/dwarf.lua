@@ -6,6 +6,8 @@ mod.init_dwarf = function(self)
     -- more ammo
     BuffTemplates.bardin_ranger_passive_increased_ammunition.buffs[1].multiplier = 1.5
 
+
+
     BuffTemplates.bardin_ironbreaker_party_power_on_blocked_attacks_buff.buffs[1].duration = 15
     mod:modify_talent("dr_ironbreaker", 2, 3, {
         description_values = {
@@ -41,7 +43,7 @@ mod.init_dwarf = function(self)
 
     mod:add_talent_buff_template("dwarf_ranger", "gs_bardin_slayer_increased_defence", {
         stat_buff = "damage_taken",
-        multiplier = -0.15
+        multiplier = -0.10
     })
 
     table.insert(PassiveAbilitySettings.dr_2.buffs, "gs_bardin_slayer_increased_defence")
@@ -51,7 +53,7 @@ mod.init_dwarf = function(self)
     }
 
     pmod:add_text("rebaltourn_career_passive_name_dr_2d", "Path of Carnage")
-    pmod:add_text("rebaltourn_career_passive_desc_dr_2d_2", "Reduces damage taken by 15% and increases attack speed by 7.5%.")
+    pmod:add_text("rebaltourn_career_passive_desc_dr_2d_2", "Reduces damage taken by 10% and increases attack speed by 7.5%.")
 
     pmod:add_buff_template("engi_2_1_cdr", {
         stat_buff = "cooldown_regen",
@@ -67,5 +69,18 @@ mod.init_dwarf = function(self)
     })
     pmod:add_text("engi_2_1_cdr_name", "Considerably Less Ingenious Ordnance")
     pmod:add_text("engi_2_1_cdr_desc", "Gain cooldown regeneration equivalent to one crank at all times.")
-
+    
+    --minigun special kills give 8 seconds of free firing
+    BuffTemplates.bardin_engineer_increased_ability_bar_buff.buffs[1].duration = 6
+    mod:modify_talent("dr_engineer", 6, 3, {
+        description_values = {
+            {
+                value_type = "percent",
+                value = 0.5
+            },
+            {
+                value = BuffTemplates.bardin_engineer_increased_ability_bar_buff.buffs[1].duration
+            },
+        },
+    })
 end

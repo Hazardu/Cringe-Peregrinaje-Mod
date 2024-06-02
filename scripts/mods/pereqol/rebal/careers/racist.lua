@@ -4,6 +4,7 @@ local pmod = get_mod("Peregrinaje")
 mod.init_victor = function(self)
 
     BuffTemplates.bounty_clip_size.buffs[1].multiplier = 1
+    BuffTemplates.victor_bountyhunter_power_level_on_clip_size_buff.buffs[1].multiplier = 0.01
     BuffTemplates.victor_bountyhunter_stacking_damage_reduction_on_elite_or_special_kill_buff.buffs[1].max_stacks = 20
     mod:modify_talent("wh_bountyhunter", 5, 3, {
         description_values = {

@@ -42,7 +42,8 @@ mod:hook(DeusRunController, "setup_run", function(func, self, run_seed, difficul
     func(self, run_seed, difficulty, journey_name, dominant_god, initial_own_soft_currency, telemetry_id, with_belakor, mutators, boons)
 end)
 
-mod:dofile("scripts/mods/pereqol/maps/createunit")
+mod:dofile("scripts/mods/pereqol/map_patch_utils")
+mod:dofile("scripts/mods/pereqol/map_patches")
  
 mod.on_all_mods_loaded = function()
     
