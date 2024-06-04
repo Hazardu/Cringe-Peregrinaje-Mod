@@ -18,3 +18,19 @@ pmod:add_text("slower_description", "Power increased by 45%. Attack and reload s
 BuffTemplates.power_up_attack_speed_per_coins_rare.buffs[1].value = 0.000025
 BuffTemplates.power_up_attack_speed_per_coins_rare.buffs[1].update_frequency = 3
 pmod:add_text("description_attack_speed_per_coins", "Attack speed increases by 1% for every 400 coins that you have, up to 127%.")
+
+DeusPowerUpTemplates.boon_dot_burning_01.buff_template.buffs[1].area_radius = 0.4
+DeusPowerUpTemplates.boon_careerskill_01.buff_template.buffs[1].area_radius = 3
+DeusPowerUpTemplates.boon_careerskill_02.buff_template.buffs[1].area_radius = 3
+DeusPowerUpTemplates.boon_careerskill_03.buff_template.buffs[1].area_radius = 3
+DeusPowerUpTemplates.boon_careerskill_04.buff_template.buffs[1].area_radius = 3
+DeusPowerUpBuffTemplates.boon_career_ability_burning_aoe.buffs[1].time_between_dot_damages = 1
+DeusPowerUpBuffTemplates.boon_career_ability_poison_aoe.buffs[1].time_between_dot_damages = 1
+DeusPowerUpBuffTemplates.boon_career_ability_bleed_aoe.buffs[1].time_between_dot_damages = 1
+DeusPowerUpBuffTemplates.boon_career_ability_burning_aoe.buffs[1].update_start_delay = 1
+DeusPowerUpBuffTemplates.boon_career_ability_poison_aoe.buffs[1].update_start_delay = 1
+DeusPowerUpBuffTemplates.boon_career_ability_bleed_aoe.buffs[1].update_start_delay = 1
+
+-- DeusPowerUpSettings.cursed_chest_choice_amount = 6
+-- DeusPowerUpSettings.cursed_chest_max_picks = 1
+-- DeusPowerUpSettings.weapon_chest_choice_amount = 3
