@@ -42,11 +42,52 @@ mod:hook(DeusRunController, "setup_run", function(func, self, run_seed, difficul
     func(self, run_seed, difficulty, journey_name, dominant_god, initial_own_soft_currency, telemetry_id, with_belakor, mutators, boons)
 end)
 
+mod.reserve_space_for_talent = function (talent_name, career_name, row, _icon, _buffer)
+    _icon = _icon or "icons_placeholder"
+    _buffer = _buffer or "server"
+    
+    local career_settings = CareerSettings[career_name]
+    local character_name = career_settings.profile_name
+    local talent_tree_index = career_settings.talent_tree_index
+    
+    --reserve in TalentIDLookup
+    local talent_id = #Talents[character_name] + 101
+    TalentIDLookup[talent_name] = {
+        talent_id = talent_id,
+        hero_name = character_name
+    }
+    --talent row
+    local chartalentTree = TalentTrees[character_name]
+    local tidx = chartalentTree[talent_tree_index]
+    local column = #tidx[row] + 1
+    
+    --reserve in TalentTrees
+    TalentTrees[character_name][talent_tree_index][row][column] = talent_name
+    
+    --add to Talents
+    Talents[character_name][talent_id] = {
+        icon = _icon,
+        buffer = _buffer,
+        description_values = {},
+        buffs = {},
+        row = row,
+        talent_id = talent_id,
+        tree = talent_tree_index,
+        coulumn = column,
+        num_ranks = 1,
+        name = talent_name,
+        description = talent_name.."_desc"
+    }
+    return column
+end
+
 mod:dofile("scripts/mods/pereqol/map_patch_utils")
 mod:dofile("scripts/mods/pereqol/map_patches")
- 
+
+mod.reserve_space_for_talent("kerillian_waywatcher_passive_restore_ammo", "we_waywatcher", 4, "kerillian_waywatcher_movement_speed_on_special_kill")
+
 mod.on_all_mods_loaded = function()
-    
+
     local Peregrinaje = get_mod("Peregrinaje")
     if Peregrinaje then
         Peregrinaje.register_callback(function()

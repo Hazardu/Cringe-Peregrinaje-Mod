@@ -8,6 +8,7 @@ mod.merge = function(self, dst, src)
     return dst
 end
 
+
 mod.add_talent_buff_template = function(self, hero_name, buff_name, buff_data, extra_data)   
     local new_talent_buff = {
         buffs = {
@@ -76,6 +77,10 @@ mod.modify_talent = function(self, career_name, tier, index, new_talent_data)
     Talents[hero_name][old_talent_id] = mod:merge(old_talent_data, new_talent_data)
 end
 
+mod.add_buff_function = function(self, name, func)
+    BuffFunctionTemplates.functions[name] = func
+end
+
 mod:dofile("scripts/mods/pereqol/rebal/careers/dwarf")
 mod:dofile("scripts/mods/pereqol/rebal/careers/elf")
 mod:dofile("scripts/mods/pereqol/rebal/careers/racist")
@@ -103,9 +108,7 @@ mod.rebal_changes = function(self)
     -- local function add_proc_function(name, func)
     --     ProcFunctions[name] = func
     -- end
-    -- local function add_buff_function(name, func)
-    --     BuffFunctionTemplates.functions[name] = func
-    -- end
+
     
     -- local function add_buff(owner_unit, buff_name)
     --     if Managers.state.network ~= nil then
@@ -286,6 +289,9 @@ mod.rebal_changes = function(self)
             mod:echo("modifying thp talent failed %s powerup failed %s", career, err)
         end
     end
+    
+    BuffTemplates.peregrinaje_linesman.buffs[1].multiplier = 0
+    -- pmod:add_text("peregrinaje_smiter_desc", "")
 
     mod:dofile("scripts/mods/pereqol/rebal/weapons")
     mod:dofile("scripts/mods/pereqol/rebal/boons")

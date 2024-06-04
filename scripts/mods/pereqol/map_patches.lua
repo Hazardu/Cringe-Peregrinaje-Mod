@@ -25,7 +25,6 @@ local spawn_cubes_for_levels = function()
     local player = Managers.player:local_player()
     local world = Managers.world:world("level_world")
     local level_name = LevelHelper:current_level_settings(world).level_name
-    mod:echo("Level name: " .. level_name)
     if is_chw_map(level_name, "gorge") then
         mod:dofile("scripts/mods/pereqol/maps/foetid_gorge")
     elseif is_chw_map(level_name, "town") then
