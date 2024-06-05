@@ -20,4 +20,16 @@ return {
 	disable_no_respawn_modifier_tooltip = {
 		en = "Prevents map nodes with Abduction from appearing"
 	},
+	disable_nurgle_miasma_name = {
+		en = "Disable Nurgle Miasma Curse"
+	},
+	disable_nurgle_miasma_tooltip = {
+		en = "Prevents map nodes cursed by Nurgle from rolling with miasma curse"
+	},
+	disable_tzeentch_sizes_name = {
+		en = "Disable Tzeentch Sizes Curse"
+	},
+	disable_tzeentch_sizes_tooltip = {
+		en = "Prevents map nodes cursed by Tzeentch from rolling with randomized enemy curse"
+	},
 }

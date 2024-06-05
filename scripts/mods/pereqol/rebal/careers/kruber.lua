@@ -30,4 +30,34 @@ mod.init_kruber = function(self)
             }
         }
     })
+
+
+    mod:add_talent_buff_template("empire_soldier", "gs_sniper_buff_1", {
+		multiplier = -1,
+		stat_buff = "reduced_spread",
+	})
+	mod:add_talent_buff_template("empire_soldier", "gs_sniper_buff_2", {
+		multiplier = -1,
+		stat_buff = "reduced_spread_hit",
+	})
+	mod:add_talent_buff_template("empire_soldier", "gs_sniper_buff_3", {
+		multiplier = -3,
+		stat_buff = "reduced_spread_moving",
+	})
+	mod:add_talent_buff_template("empire_soldier", "gs_sniper_buff_4", {
+		multiplier = -3,
+		stat_buff = "reduced_spread_shot",
+	})
+	mod:modify_talent("es_huntsman", 5, 4, {
+		buffs = {
+			"gs_sniper_buff_1",
+			"gs_sniper_buff_2",
+			"gs_sniper_buff_3",
+			"gs_sniper_buff_4"
+		},
+	})
+	pmod:add_text("huntsman_pinpoint_accuracy", "Hip Fire Expert")
+	pmod:add_text("huntsman_pinpoint_accuracy_desc", "Makes all ranged attacks pin point accurate and removes aim punch.")
+
+
 end

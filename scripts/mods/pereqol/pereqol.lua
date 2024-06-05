@@ -1,12 +1,6 @@
 local mod = get_mod("pereqol")
 
 
--- disable being catapulted when enemies drop at you
--- stopped working since 5.5.0 update dropped
--- mod:hook(BTClimbAction, "_catapult_players", function(func, self, unit, blackboard, data)
---     return
--- end)
-
 local function has_value (tab, val)
     for index, value in ipairs(tab) do
         if value == val then
@@ -17,30 +11,7 @@ local function has_value (tab, val)
     return false
 end
 
-mod:hook(DeusRunController, "setup_run", function(func, self, run_seed, difficulty, journey_name, dominant_god, initial_own_soft_currency, telemetry_id, with_belakor, mutators, boons)
-    local skipUlgu = mod:get("disable_ulgu_modifier")
-    local skipDarkness = mod:get("disable_darkness_modifier")
-    local skipAbduction = mod:get("disable_no_respawn_modifier")
 
-    local populate_config = DEUS_MAP_POPULATE_SETTINGS[journey_name] or DEUS_MAP_POPULATE_SETTINGS.default
-    local modifiers = populate_config.AVAILABLE_MINOR_MODIFIERS
-    local toSet = {}
-    for mod_id, modifierList in pairs(modifiers) do
-        -- oscuridad - darkness 
-        -- curse_belakors_shadows - ulgus deception
-        -- no_respawn - abduction
-        if skipDarkness and has_value(modifierList, "oscuridad") then -- skip
-        elseif skipAbduction and has_value(modifierList, "no_respawn") then -- skip
-        elseif skipUlgu and has_value(modifierList, "curse_belakors_shadows") then -- skip
-        else
-            toSet[#toSet+1] = modifierList
-        end
-    end
-
-    DEUS_MAP_POPULATE_SETTINGS[journey_name].AVAILABLE_MINOR_MODIFIERS = toSet
-    
-    func(self, run_seed, difficulty, journey_name, dominant_god, initial_own_soft_currency, telemetry_id, with_belakor, mutators, boons)
-end)
 
 mod.reserve_space_for_talent = function (talent_name, career_name, row, _icon, _buffer)
     _icon = _icon or "icons_placeholder"
@@ -83,18 +54,109 @@ end
 
 mod:dofile("scripts/mods/pereqol/map_patch_utils")
 mod:dofile("scripts/mods/pereqol/map_patches")
+mod:dofile("scripts/mods/pereqol/rebal/more_talents")
 
-mod.reserve_space_for_talent("kerillian_waywatcher_passive_restore_ammo", "we_waywatcher", 4, "kerillian_waywatcher_movement_speed_on_special_kill")
+mod:hook(DeusRunController, "setup_run", function(func, self, run_seed, difficulty, journey_name, dominant_god, initial_own_soft_currency, telemetry_id, with_belakor, mutators, boons)
+    local skipUlgu = mod:get("disable_ulgu_modifier")
+    local skipDarkness = mod:get("disable_darkness_modifier")
+    local skipAbduction = mod:get("disable_no_respawn_modifier")
+    local skipMiasma = mod:get("disable_nurgle_miasma")
+    local skipTzeentchSizes = mod:get("disable_tzeentch_sizes")
+
+    local reward_modifiers = {
+        DoubleChest = 2,
+        Dinero = 1,
+        DineroPlus = 2
+    }
+    local hard_modifiers = {
+        "deus_more_hordes",
+        "deus_more_specials",
+        "deus_more_elites", 
+        "deus_more_roamers",
+        "powerful_elites", 
+        "deus_more_monsters",
+        "no_respawn",
+        "curse_belakors_shadows"
+    }
+    local easy_modifiers = {
+        "deus_less_hordes",
+        "deus_less_specials",
+        "deus_less_elites",
+        "deus_less_roamers",
+        "MutatorNoRoaming",
+        "deus_less_monsters",
+    }
+
+    local populate_config = DEUS_MAP_POPULATE_SETTINGS[journey_name] or DEUS_MAP_POPULATE_SETTINGS.default
+    local modifiers = populate_config.AVAILABLE_MINOR_MODIFIERS
+    local toSet = {}
+    for mod_id, modifierList in pairs(modifiers) do
+        -- oscuridad - darkness 
+        -- curse_belakors_shadows - ulgus deception
+        -- no_respawn - abduction
+        if skipDarkness and has_value(modifierList, "oscuridad") then -- skip
+        elseif skipAbduction and has_value(modifierList, "no_respawn") then -- skip
+        elseif skipUlgu and has_value(modifierList, "curse_belakors_shadows") then -- skip
+        else
+            if difficulty == "cataclysm_3" then
+                local newModList = {}
+                local hardMods = 0;
+                for rewMod, price in pairs(reward_modifiers) do
+                    if has_value(modifierList, rewMod) then
+                        hardMods = hardMods + price
+                    end 
+                end
+                for x, mod in pairs(modifierList) do
+                    if has_value(easy_modifiers, mod) and hardMods > 0 then
+                        hardMods = hardMods - 1
+                    else    
+                        if has_value(hard_modifiers, mod) then
+                            hardMods = hardMods - 1
+                        end
+                        newModList[#newModList + 1] = mod
+                    end
+                end
+                for x, hardmod in pairs(hard_modifiers) do
+                    if hardMods > 0 and not has_value(newModList, hardmod) then
+                        newModList[#newModList + 1] = hardmod
+                        hardMods = hardMods - 1
+                    end
+                end
+                toSet[#toSet+1] = newModList
+            else
+                toSet[#toSet+1] = modifierList
+            end
+        end
+    end
+    DEUS_MAP_POPULATE_SETTINGS[journey_name].AVAILABLE_MINOR_MODIFIERS = toSet
+
+    local toSetCurses = {}
+    local curses = populate_config.AVAILABLE_CURSES
+    for map_type, godtable in pairs(curses) do
+        toSetCurses[map_type] = {}
+        for godname, curseList in pairs(godtable) do
+            toSetCurses[map_type][godname] = {}
+            for curseIdx, curseName in pairs(curseList) do
+                if skipMiasma and curseName == "curse_rotten_miasma" then --skip
+                elseif skipTzeentchSizes and curseName == "VariableSize" then --skip
+                else
+                    toSetCurses[map_type][godname][#toSetCurses[map_type][godname] + 1] = curseName
+                end
+            end
+        end
+    end
+    DEUS_MAP_POPULATE_SETTINGS[journey_name].AVAILABLE_CURSES = toSetCurses
+    func(self, run_seed, difficulty, journey_name, dominant_god, initial_own_soft_currency, telemetry_id, with_belakor, mutators, boons)
+end)
 
 mod.on_all_mods_loaded = function()
 
     local Peregrinaje = get_mod("Peregrinaje")
     if Peregrinaje then
         Peregrinaje.register_callback(function()
-            
             -- disable stats by defaut
             Peregrinaje:ToggleStats()
-            
+
             for expedition_name, expedition in pairs(DEUS_MAP_POPULATE_SETTINGS) do
                 local modifiers = expedition.AVAILABLE_MINOR_MODIFIERS
                 local toSet = {}
@@ -116,35 +178,7 @@ mod.on_all_mods_loaded = function()
             mod:dofile("scripts/mods/pereqol/climbing_enemies")
             
             mod:rebal_changes()
-            -- add to TalentTrees
-               --  [dwarf_ranger][subclass][row][last element] = string of talent name
-            -- add to TalentIDLookup
-                -- [bardin_slayer_push_on_dodge] = table
-                --     [talent_id] = 30 (number)
-                --     [hero_name] = dwarf_ranger (string)
-            -- add to Talents.dwarf_ranger
-                -- {
-                --     buffer = "server",
-                --     description = "vanguard_desc",
-                --     icon = "bardin_ironbreaker_regrowth",
-                --     name = "bardin_ironbreaker_vanguard",
-                --     num_ranks = 1,
-                --     description_values = {},
-                --     buffs = {
-                --         "bardin_ironbreaker_vanguard",
-                --     },
-                -- },
-            -- add to TalentBuffTemplates.dwarf_ranger
-                -- bardin_ironbreaker_ability_cooldown_on_hit = {
-                    -- buffs = {
-                    --     {
-                    --         buff_func = "reduce_activated_ability_cooldown",
-                    --         event = "on_hit",
-                    --     },
-                    -- },
-
-            -- BuffUtils.copy_talent_buff_names(TalentBuffTemplates.dwarf_ranger)
-            -- BuffUtils.apply_buff_tweak_data(TalentBuffTemplates.dwarf_ranger, buff_tweak_data)
+            
         end)
     end
 
