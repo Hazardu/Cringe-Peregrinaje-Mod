@@ -56,8 +56,5 @@ mod.init_kruber = function(self)
 			"gs_sniper_buff_4"
 		},
 	})
-	pmod:add_text("huntsman_pinpoint_accuracy", "Hip Fire Expert")
-	pmod:add_text("huntsman_pinpoint_accuracy_desc", "Makes all ranged attacks pin point accurate and removes aim punch.")
-
 
 end

@@ -21,11 +21,6 @@ mod.init_elf = function(self)
     })
     BuffTemplates.kerillian_shade_ult_invis_combo_window_peregrinaje.buffs[1].extend_time = 2
 
-    BuffTemplates.kerillian_waywatcher_extra_arrow_melee_kill_buff.buffs[1].bonus = 3
-    pmod:add_text("cringemod_kerillian_waywatcher_extra_arrow_melee_kill_desc", "After killing an enemy with a melee attack, your next ranged attack within 10 seconds fires 3 additional arrows.")
-    mod:modify_talent("we_waywatcher", 2, 1, {
-        description = "cringemod_kerillian_waywatcher_extra_arrow_melee_kill_desc",
-    })
 
     BuffTemplates.kerillian_maidenguard_activated_ability_crit_buff.buffs[1].duration = 15
     BuffTemplates.kerillian_maidenguard_power_level_on_unharmed_cooldown.buffs[1].duration = 6
@@ -108,8 +103,35 @@ mod.init_elf = function(self)
         end
         original_regen_func(unit, buff, params, world)
     end
-	pmod:add_text("kerillian_waywatcher_passive_restore_ammo", "Bottomless Quiver")
-	pmod:add_text("kerillian_waywatcher_passive_restore_ammo_desc", "Amaranthe also restores 5% ammunition every tick.\n\nI'm testing how to add new talents to Peregrinaje\n~Hazard")
 
-
+    -- mod:add_talent_buff_template("wood_elf", "cringe_kerillian_waywatcher_extra_arrow_melee_kill", {
+    --     buff_func = "kerillian_waywatcher_add_extra_shot_buff_on_melee_kill",
+    --     buff_to_add = "cringe_kerillian_waywatcher_extra_arrow_melee_kill_buff",
+    --     event = "on_kill",
+    -- })
+    -- mod:add_talent_buff_template("wood_elf", "cringe_kerillian_waywatcher_extra_arrow_melee_kill_buff", {
+    --     buff_func = "kerillian_waywatcher_consume_extra_shot_buff",
+    --     event = "on_ranged_hit",
+    --     icon = "kerillian_waywatcher_extra_arrow_melee_kill",
+    --     max_stacks = 1,
+    --     refresh_durations = true,
+    --     remove_on_proc = true,
+    --     stat_buff = "extra_shot",
+    -- })
+    
+    -- BuffTemplates.kerillian_waywatcher_extra_arrow_melee_kill_buff.buffs[1].bonus = 3
+    -- mod:modify_talent("we_waywatcher", 2, 4, {
+    --     description = "cringemod_kerillian_waywatcher_extra_arrow_melee_kill_desc",
+	-- 	icon = "kerillian_waywatcher_extra_arrow_melee_kill",
+	-- 	name = "kerillian_waywatcher_extra_arrow_melee_kill",
+	-- 	num_ranks = 1,
+	-- 	description_values = {
+	-- 		{
+	-- 			value = BuffTemplates.kerillian_waywatcher_extra_arrow_melee_kill_buff.buffs[1].duration,
+	-- 		},
+	-- 	},
+    --     buffs = {
+	-- 		"cringe_kerillian_waywatcher_extra_arrow_melee_kill",
+	-- 	},
+    -- })
 end

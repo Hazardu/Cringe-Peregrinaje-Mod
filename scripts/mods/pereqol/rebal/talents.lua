@@ -91,8 +91,7 @@ mod.rebal_changes = function(self)
     local pmod = get_mod("Peregrinaje")
     local buff_perks = require("scripts/unit_extensions/default_player_unit/buffs/settings/buff_perk_names")
 
-    BuffTemplates.weave_agile.buffs = {} -- disable cat as its used just for getting out of bounds 90% of the time
-    pmod:add_text("weave_agile_desc", "Does fuck all, no more meowing you furry.")
+    -- BuffTemplates.weave_agile.buffs = {} -- disable cat as its used just for getting out of bounds 90% of the time
 
     -- local function add_buff_template(buff_name, buff_data)   
     --     local new_talent_buff = {
@@ -192,7 +191,6 @@ mod.rebal_changes = function(self)
         end
     end)
 
-    pmod:add_text("cringemod_regrowth_name", "Crit/HS Thp")
 
     pmod:add_buff_template("cringemod_regrowth", {
         name = "regrowth",
@@ -238,8 +236,6 @@ mod.rebal_changes = function(self)
             end
         end
     end)
-    pmod:add_text("cringemod_cleave_thp_name", "Multi Hit Thp")
-    pmod:add_text("cringemod_cleave_thp_desc", "You gain 1 temp health when hitting an enemy, up to 5 enemies per attack.")
 
     pmod:add_buff_template("cringemod_cleave_thp", {
         bonus = 0.25,
@@ -291,7 +287,6 @@ mod.rebal_changes = function(self)
     end
     
     BuffTemplates.peregrinaje_linesman.buffs[1].multiplier = 0
-    -- pmod:add_text("peregrinaje_smiter_desc", "")
 
     mod:dofile("scripts/mods/pereqol/rebal/weapons")
     mod:dofile("scripts/mods/pereqol/rebal/boons")
@@ -300,7 +295,6 @@ mod.rebal_changes = function(self)
     mod:init_kruber()
     mod:init_sienna()
     mod:init_victor()
-  
-
+    
 
 end

@@ -1,6 +1,5 @@
 local mod = get_mod("pereqol")
 
-
 local function has_value (tab, val)
     for index, value in ipairs(tab) do
         if value == val then
@@ -12,6 +11,32 @@ local function has_value (tab, val)
 end
 
 
+-- -- Text Localization
+-- local _language_id = Application.user_setting("language_id")
+-- local _localization_database = {}
+-- mod._quick_localize = function (self, text_id)
+--     local mod_localization_table = _localization_database
+--     if mod_localization_table then
+--         local text_translations = mod_localization_table[text_id]
+--         if text_translations then
+--             return text_translations[_language_id] or text_translations["en"]
+--         end
+--     end
+-- end
+-- function mod.add_text(self, text_id, text)
+--     if type(text) == "table" then
+--         _localization_database[text_id] = text
+--     else
+--         _localization_database[text_id] = {
+--             en = text
+--         }
+--     end
+-- end
+-- mod:hook("Localize", function(func, text_id)
+--     local str = mod:_quick_localize(text_id)
+--     if str then return str end
+--     return func(text_id)
+-- end)
 
 mod.reserve_space_for_talent = function (talent_name, career_name, row, _icon, _buffer)
     _icon = _icon or "icons_placeholder"
@@ -64,7 +89,7 @@ mod:hook(DeusRunController, "setup_run", function(func, self, run_seed, difficul
     local skipTzeentchSizes = mod:get("disable_tzeentch_sizes")
 
     local reward_modifiers = {
-        DoubleChest = 2,
+        DoubleChest = 3,
         Dinero = 1,
         DineroPlus = 2
     }
@@ -86,7 +111,7 @@ mod:hook(DeusRunController, "setup_run", function(func, self, run_seed, difficul
         "MutatorNoRoaming",
         "deus_less_monsters",
     }
-
+    mod:dump(DEUS_MAP_POPULATE_SETTINGS.peregrinaje.AVAILABLE_MINOR_MODIFIERS, "AVAILABLE_MINOR_MODIFIERS",2)
     local populate_config = DEUS_MAP_POPULATE_SETTINGS[journey_name] or DEUS_MAP_POPULATE_SETTINGS.default
     local modifiers = populate_config.AVAILABLE_MINOR_MODIFIERS
     local toSet = {}
@@ -149,37 +174,46 @@ mod:hook(DeusRunController, "setup_run", function(func, self, run_seed, difficul
     func(self, run_seed, difficulty, journey_name, dominant_god, initial_own_soft_currency, telemetry_id, with_belakor, mutators, boons)
 end)
 
-mod.on_all_mods_loaded = function()
+mod.loaded = false
+local updateFrames = 0
 
-    local Peregrinaje = get_mod("Peregrinaje")
-    if Peregrinaje then
-        Peregrinaje.register_callback(function()
-            -- disable stats by defaut
-            Peregrinaje:ToggleStats()
 
-            for expedition_name, expedition in pairs(DEUS_MAP_POPULATE_SETTINGS) do
-                local modifiers = expedition.AVAILABLE_MINOR_MODIFIERS
-                local toSet = {}
+mod.update = function(dt)
+	if mod.loaded == false then
+		local pmod = get_mod("Peregrinaje")
+		if pmod then
+			if pmod["player_stats"] then 
+				local ps = pmod["player_stats"]
+				if next(ps) ~= nil then
+					updateFrames = updateFrames + dt
+					if updateFrames > 1 then
+						mod.loaded = true
+                        pmod:ToggleStats()
 
-                for mod_id, modifierList in pairs(modifiers) do
-                    -- oscuridad - darkness 
-                    -- curse_belakors_shadows - ulgus deceptions
-                    if has_value(modifierList, "oscuridad") or has_value(modifierList, "curse_belakors_shadows") then
-                        -- skip
-                    else
-                        toSet[#toSet+1] = modifierList
-                    end
-                end
-                DEUS_MAP_POPULATE_SETTINGS[expedition_name].AVAILABLE_MINOR_MODIFIERS = toSet
-            end
-
+                        mod:dofile("scripts/mods/pereqol/rebal/talents")
+                        mod:dofile("scripts/mods/pereqol/climbing_enemies")
+                        mod:dofile("scripts/mods/pereqol/rebal/localization")
             
-            mod:dofile("scripts/mods/pereqol/rebal/talents")
-            mod:dofile("scripts/mods/pereqol/climbing_enemies")
-            
-            mod:rebal_changes()
-            
-        end)
-    end
-
+                        mod:rebal_changes()
+					end
+				end
+			end
+		end
+	end
 end
+
+
+
+
+-- mod.on_all_mods_loaded = function()
+
+--     local Peregrinaje = get_mod("Peregrinaje")
+--     if Peregrinaje then
+--         Peregrinaje.register_callback(function()
+--             -- disable stats by defaut
+            
+            
+--         end)
+--     end
+
+-- end

@@ -52,8 +52,6 @@ mod.init_dwarf = function(self)
         description = "rebaltourn_career_passive_desc_dr_2d_2"
     }
 
-    pmod:add_text("rebaltourn_career_passive_name_dr_2d", "Path of Carnage")
-    pmod:add_text("rebaltourn_career_passive_desc_dr_2d_2", "Reduces damage taken by 10% and increases attack speed by 7.5%.")
 
     pmod:add_buff_template("engi_2_1_cdr", {
         stat_buff = "cooldown_regen",
@@ -67,9 +65,7 @@ mod.init_dwarf = function(self)
             "engi_2_1_cdr"
         }
     })
-    pmod:add_text("engi_2_1_cdr_name", "Considerably Less Ingenious Ordnance")
-    pmod:add_text("engi_2_1_cdr_desc", "Gain cooldown regeneration equivalent to one crank at all times.")
-    
+
     --minigun special kills give 8 seconds of free firing
     BuffTemplates.bardin_engineer_increased_ability_bar_buff.buffs[1].duration = 6
     mod:modify_talent("dr_engineer", 6, 3, {

@@ -2,7 +2,7 @@ local mod = get_mod("pereqol")
 local pmod = get_mod("Peregrinaje")
 
 mod.init_victor = function(self)
-
+    mod:dump(get_mod("Peregrinaje"), "pere", 0)
     BuffTemplates.bounty_clip_size.buffs[1].multiplier = 1
     BuffTemplates.victor_bountyhunter_power_level_on_clip_size_buff.buffs[1].multiplier = 0.01
     BuffTemplates.victor_bountyhunter_stacking_damage_reduction_on_elite_or_special_kill_buff.buffs[1].max_stacks = 20
@@ -33,7 +33,6 @@ mod.init_victor = function(self)
         multiplier = -0.20,
         stat_buff = "activated_cooldown",
     })
-    pmod:add_text("victor_bountyhunter_activated_ability_blast_shotgun_desc", "Modifies Victor's sidearm to fire two blasts of shield-penetrating pellets in a devastating cone. Reduces cooldown of Locked and Loaded by 25%%. Gain 5%% ammo on ranged citical hit.")
     mod:modify_talent("wh_bountyhunter", 6, 3, {
         buffs = {
             "victor_bountyhunter_activated_ability_blast_shotgun",
@@ -51,13 +50,4 @@ mod.init_victor = function(self)
             }
         },
     })
-
-    -- crit chance for 6-1, does not work
-    -- BuffTemplates.victor_bountyhunter_activated_ability_passive_cooldown_reduction.buffs[2].multiplier = 0.075
-    -- pmod:add_text("cringemod_victor_bountyhunter_activated_ability_reset_cooldown_on_stacks_2_desc", "Ranged critical hits reduce the cooldown of your career skill by 20%%. This effect can occur every 4 seconds. Increases crit chance by 7.5%%.")
-    -- mod:modify_talent("wh_bountyhunter", 6, 1, {
-    --     description = "cringemod_victor_bountyhunter_activated_ability_reset_cooldown_on_stacks_2_desc",
-    -- })
-
-
 end
