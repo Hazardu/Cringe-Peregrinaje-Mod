@@ -28,6 +28,3 @@ DeusPowerUpBuffTemplates.boon_career_ability_burning_aoe.buffs[1].update_start_d
 DeusPowerUpBuffTemplates.boon_career_ability_poison_aoe.buffs[1].update_start_delay = 1
 DeusPowerUpBuffTemplates.boon_career_ability_bleed_aoe.buffs[1].update_start_delay = 1
 
--- DeusPowerUpSettings.cursed_chest_choice_amount = 6
--- DeusPowerUpSettings.cursed_chest_max_picks = 1
--- DeusPowerUpSettings.weapon_chest_choice_amount = 3

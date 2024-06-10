@@ -103,35 +103,62 @@ mod.init_elf = function(self)
         end
         original_regen_func(unit, buff, params, world)
     end
-
-    -- mod:add_talent_buff_template("wood_elf", "cringe_kerillian_waywatcher_extra_arrow_melee_kill", {
-    --     buff_func = "kerillian_waywatcher_add_extra_shot_buff_on_melee_kill",
-    --     buff_to_add = "cringe_kerillian_waywatcher_extra_arrow_melee_kill_buff",
-    --     event = "on_kill",
-    -- })
-    -- mod:add_talent_buff_template("wood_elf", "cringe_kerillian_waywatcher_extra_arrow_melee_kill_buff", {
-    --     buff_func = "kerillian_waywatcher_consume_extra_shot_buff",
-    --     event = "on_ranged_hit",
-    --     icon = "kerillian_waywatcher_extra_arrow_melee_kill",
-    --     max_stacks = 1,
-    --     refresh_durations = true,
-    --     remove_on_proc = true,
-    --     stat_buff = "extra_shot",
-    -- })
     
-    -- BuffTemplates.kerillian_waywatcher_extra_arrow_melee_kill_buff.buffs[1].bonus = 3
-    -- mod:modify_talent("we_waywatcher", 2, 4, {
-    --     description = "cringemod_kerillian_waywatcher_extra_arrow_melee_kill_desc",
-	-- 	icon = "kerillian_waywatcher_extra_arrow_melee_kill",
-	-- 	name = "kerillian_waywatcher_extra_arrow_melee_kill",
-	-- 	num_ranks = 1,
-	-- 	description_values = {
-	-- 		{
-	-- 			value = BuffTemplates.kerillian_waywatcher_extra_arrow_melee_kill_buff.buffs[1].duration,
-	-- 		},
-	-- 	},
-    --     buffs = {
-	-- 		"cringe_kerillian_waywatcher_extra_arrow_melee_kill",
-	-- 	},
-    -- })
+    ProcFunctions.cringe_kerillian_waywatcher_add_extra_shot_buff_on_melee_kill = function (owner_unit, buff, params)
+        if not ALIVE[owner_unit] then
+            return
+        end
+    
+        local killing_blow_data = params[1]
+    
+        if not killing_blow_data then
+            return
+        end
+    
+        local attack_type = killing_blow_data[DamageDataIndex.ATTACK_TYPE]
+        mod:dump(killing_blow_data, "killing_blow_data", 10)
+        if not attack_type or attack_type ~= "light_attack" and attack_type ~= "heavy_attack" then
+            return
+        end
+    
+        local buff_template = buff.template
+        local buff_name = buff_template.buff_to_add
+        local buff_extension = ScriptUnit.extension(owner_unit, "buff_system")
+    
+        buff_extension:add_buff(buff_name, {
+            attacker_unit = owner_unit,
+        })
+    end
+    mod:add_talent_buff_template("wood_elf", "cringe_kerillian_waywatcher_extra_arrow_melee_kill", {
+        buff_func = "cringe_kerillian_waywatcher_add_extra_shot_buff_on_melee_kill",
+        buff_to_add = "cringe_kerillian_waywatcher_extra_arrow_melee_kill_buff",
+        event = "on_kill",
+    })
+    mod:add_talent_buff_template("wood_elf", "cringe_kerillian_waywatcher_extra_arrow_melee_kill_buff", {
+        buff_func = "kerillian_waywatcher_consume_extra_shot_buff",
+        event = "on_ranged_hit",
+        icon = "kerillian_waywatcher_extra_arrow_melee_kill",
+        max_stacks = 1,
+        refresh_durations = true,
+        remove_on_proc = true,
+        stat_buff = "extra_shot",
+        duration = 10,
+        bonus = 3
+    })
+    
+    BuffTemplates.kerillian_waywatcher_extra_arrow_melee_kill_buff.buffs[1].bonus = 3
+    mod:modify_talent("we_waywatcher", 2, 4, {
+        description = "cringemod_kerillian_waywatcher_extra_arrow_melee_kill_desc",
+		icon = "kerillian_waywatcher_extra_arrow_melee_kill",
+		name = "kerillian_waywatcher_extra_arrow_melee_kill",
+		num_ranks = 1,
+		description_values = {
+			{
+				value = BuffTemplates.kerillian_waywatcher_extra_arrow_melee_kill_buff.buffs[1].duration,
+			},
+		},
+        buffs = {
+			"cringe_kerillian_waywatcher_extra_arrow_melee_kill",
+		},
+    })
 end

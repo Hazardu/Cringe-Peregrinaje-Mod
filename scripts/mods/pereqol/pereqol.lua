@@ -38,16 +38,13 @@ end
 --     return func(text_id)
 -- end)
 
-mod.reserve_space_for_talent = function (talent_name, career_name, row, _icon, _buffer)
+mod.reserve_space_for_talent = function (talent_name, career_name, row, _icon, _talentid)
     _icon = _icon or "icons_placeholder"
-    _buffer = _buffer or "server"
-    
     local career_settings = CareerSettings[career_name]
     local character_name = career_settings.profile_name
     local talent_tree_index = career_settings.talent_tree_index
-    
     --reserve in TalentIDLookup
-    local talent_id = #Talents[character_name] + 101
+    local talent_id = _talentid or #Talents[character_name] + 1
     TalentIDLookup[talent_name] = {
         talent_id = talent_id,
         hero_name = character_name
@@ -57,13 +54,10 @@ mod.reserve_space_for_talent = function (talent_name, career_name, row, _icon, _
     local tidx = chartalentTree[talent_tree_index]
     local column = #tidx[row] + 1
     
-    --reserve in TalentTrees
-    TalentTrees[character_name][talent_tree_index][row][column] = talent_name
-    
     --add to Talents
     Talents[character_name][talent_id] = {
         icon = _icon,
-        buffer = _buffer,
+        buffer = "server",
         description_values = {},
         buffs = {},
         row = row,
@@ -73,7 +67,10 @@ mod.reserve_space_for_talent = function (talent_name, career_name, row, _icon, _
         num_ranks = 1,
         name = talent_name,
         description = talent_name.."_desc"
-    }
+        }
+    --reserve in TalentTrees
+    TalentTrees[character_name][talent_tree_index][row][column] = talent_name
+    
     return column
 end
 
@@ -111,7 +108,6 @@ mod:hook(DeusRunController, "setup_run", function(func, self, run_seed, difficul
         "MutatorNoRoaming",
         "deus_less_monsters",
     }
-    mod:dump(DEUS_MAP_POPULATE_SETTINGS.peregrinaje.AVAILABLE_MINOR_MODIFIERS, "AVAILABLE_MINOR_MODIFIERS",2)
     local populate_config = DEUS_MAP_POPULATE_SETTINGS[journey_name] or DEUS_MAP_POPULATE_SETTINGS.default
     local modifiers = populate_config.AVAILABLE_MINOR_MODIFIERS
     local toSet = {}
