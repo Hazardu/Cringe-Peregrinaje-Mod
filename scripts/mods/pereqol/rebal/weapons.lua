@@ -478,4 +478,7 @@ Weapons.two_handed_halberds_template_1.actions.action_one.default.allowed_chain_
 Weapons.two_handed_halberds_template_1.actions.action_one.heavy_attack_stab.anim_time_scale = 1.25
 Weapons.two_handed_halberds_template_1.actions.action_one.heavy_attack_stab.range_mod = 1.45
 
+
+
+
 apply_weapon_changes()

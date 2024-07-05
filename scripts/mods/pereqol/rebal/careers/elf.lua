@@ -6,19 +6,19 @@ mod.init_elf = function(self)
     -- more ammo
     BuffTemplates.kerillian_waywatcher_passive_increased_ammunition.buffs[1].multiplier = 2.0
 
-    BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].duration = 6
-    BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].multiplier  = 0.2
-    mod:modify_talent("we_waywatcher", 2, 3, {
-        description_values = {
-            {
-                value_type = "percent",
-                value = BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].multiplier
-            },
-            {
-                value = BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].duration
-            }
-        },
-    })
+    -- BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].duration = 6
+    -- BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].multiplier  = 0.2
+    -- mod:modify_talent("we_waywatcher", 2, 3, {
+    --     description_values = {
+    --         {
+    --             value_type = "percent",
+    --             value = BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].multiplier
+    --         },
+    --         {
+    --             value = BuffTemplates.kerillian_waywatcher_attack_speed_on_ranged_headshot_buff.buffs[1].duration
+    --         }
+    --     },
+    -- })
     BuffTemplates.kerillian_shade_ult_invis_combo_window_peregrinaje.buffs[1].extend_time = 2
 
 
@@ -160,5 +160,6 @@ mod.init_elf = function(self)
         buffs = {
 			"cringe_kerillian_waywatcher_extra_arrow_melee_kill",
 		},
+        buffer = nil
     })
 end

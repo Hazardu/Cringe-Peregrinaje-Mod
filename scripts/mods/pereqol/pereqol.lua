@@ -189,7 +189,8 @@ mod.update = function(dt)
                         mod:dofile("scripts/mods/pereqol/rebal/talents")
                         mod:dofile("scripts/mods/pereqol/climbing_enemies")
                         mod:dofile("scripts/mods/pereqol/rebal/localization")
-            
+                        mod:dofile("scripts/mods/pereqol/blocking")
+
                         mod:rebal_changes()
 					end
 				end

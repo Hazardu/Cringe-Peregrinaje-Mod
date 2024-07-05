@@ -1,0 +1,217 @@
+
+Breeds.pet_skeleton_dual_wield.min_run_speed = 5.5
+Breeds.pet_skeleton_dual_wield.height = 4
+Breeds.pet_skeleton_dual_wield.passive_walk_speed = 5.5
+Breeds.pet_skeleton_dual_wield.run_max_speed_distance = 5.5
+Breeds.pet_skeleton_dual_wield.run_min_speed_distance = 1.5
+Breeds.pet_skeleton_dual_wield.run_speed = 15
+Breeds.pet_skeleton_dual_wield.stagger_resistance = 4
+Breeds.pet_skeleton_dual_wield.stagger_threshold_light = 3
+Breeds.pet_skeleton_dual_wield.walk_speed = 5.5
+Breeds.pet_skeleton_dual_wield.weapon_reach = 6.5
+Breeds.pet_skeleton_dual_wield.hesitation_timer = 4
+Breeds.pet_skeleton_dual_wield.flingable = false
+Breeds.pet_skeleton_dual_wield.damage_multiplier_vs_ai = 0.01
+Breeds.pet_skeleton_dual_wield.stagger_multiplier = 0.05
+Breeds.pet_skeleton_dual_wield.hesitation_timer = 5
+Breeds.pet_skeleton_dual_wield.aoe_height = 3.4
+-- Breeds.pet_skeleton_dual_wield.boss = true
+-- Breeds.pet_skeleton_dual_wield.boss_damage_reduction = true
+-- Breeds.pet_skeleton_dual_wield.boss_staggers = true
+Breeds.pet_skeleton_dual_wield.bot_hitbox_radius_approximation = 0.75
+Breeds.pet_skeleton_dual_wield.stagger_resistance = 100
+Breeds.pet_skeleton_dual_wield.stagger_threshold_explosion = 1
+Breeds.pet_skeleton_dual_wield.stagger_threshold_heavy = 1
+Breeds.pet_skeleton_dual_wield.stagger_threshold_light = 1
+Breeds.pet_skeleton_dual_wield.stagger_threshold_medium = 1
+Breeds.pet_skeleton_dual_wield.show_health_bar = true
+Breeds.pet_skeleton_dual_wield.max_health = 30000
+Breeds.pet_skeleton_dual_wield.stagger_duration = {
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    1,
+}
+
+mod:hook(PassiveAbilityNecromancerCharges, "_on_talents_changed", function (func, self, unit, talent_extension)
+	if unit ~= self._owner_unit then
+		return
+	end
+
+	self._has_army = talent_extension:has_talent("sienna_necromancer_6_1")
+	self._has_dual_wield = talent_extension:has_talent("sienna_necromancer_6_2")
+
+	local has_mix = talent_extension:has_talent("sienna_necromancer_6_3")
+
+	if has_mix then
+		self._army_definition = {
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_with_shield",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+			"pet_skeleton_armored",
+		}
+	elseif self._has_dual_wield then
+		self._army_definition = table.fill({}, 1, "pet_skeleton_dual_wield")
+	else
+		self._army_definition = table.fill({}, 6, "pet_skeleton")
+	end
+
+	self._extra_army_skeletons = self._has_army and table.fill({}, 6, "pet_skeleton")
+
+	local is_in_inn_level = Managers.level_transition_handler:in_hub_level()
+
+	self._pets_forbidden_in_level = script_data.pets_forbidden_in_hub and is_in_inn_level
+
+	if self._is_server then
+		self:warm_up_skeletons(self._army_definition)
+	end
+
+	self._force_respawn_pets = true
+end)
+mod:echo("done 1")
+
+
+mod:hook(PassiveAbilityNecromancerCharges, "_spawn_pet_server", function (func, self, breed_name, position, position_mode, template_name)
+	local commander_ext = self._commander_extension
+	local owner_buff_extension = self._buff_extension
+	local necromancer_unit = self._owner_unit
+	local side_id = Managers.state.side.side_by_unit[necromancer_unit].side_id
+	local spawn_category = "resurrected"
+	local queued_pets = self._queued_pets
+	local breed = Breeds[breed_name]
+	local optional_data = {
+		ignore_breed_limits = true,
+		ignore_event_counter = true,
+		side_id = side_id,
+		spawned_func = function (pet_unit, breed, optional_data)
+			if ALIVE[necromancer_unit] then
+				self._spawned_pets[pet_unit] = template_name
+				queued_pets[optional_data] = nil
+				self._num_queued_pets = self._num_queued_pets - 1
+
+				owner_buff_extension:trigger_procs("on_pet_spawned", pet_unit)
+
+				local params = FrameTable.alloc_table()
+
+				params.source_attacker_unit = necromancer_unit
+
+				self._buff_system:add_buff_synced(pet_unit, "sienna_necromancer_pet_attack_sfx", BuffSyncType.Local, params, self._player.peer_id)
+				self._buff_system:add_buff_synced(pet_unit, "update_anim_movespeed", BuffSyncType.All)
+
+				if self._has_dual_wield then
+					self._buff_system:add_buff_synced(pet_unit, "sienna_necromancer_passive_balefire", BuffSyncType.Local)
+
+                    local scale = 5.3
+                    Unit.set_local_scale(pet_unit, 0, Vector3(scale, scale, scale))
+
+                    local health_extension = ScriptUnit.extension(pet_unit, "health_system")
+                    --health_extension.unmodified_max_health = 600
+                    health_extension.max_health = 620
+                    mod:dump(health_extension, "health_extension of pet", 1)
+				end
+
+				if template_name == "necromancer_pet_charges" then
+					if self._has_dual_wield then
+						self._buff_system:add_buff_synced(pet_unit, "sienna_necromancer_6_2_pet_buff", BuffSyncType.Local, self._dual_wield_params)
+					end
+				elseif template_name == "necromancer_pet_ability" then
+					local bb = BLACKBOARDS[pet_unit]
+
+					bb.ability_spawned = true
+					bb.dont_follow_commander = true
+
+					if not self._talent_extension:has_talent("sienna_necromancer_6_3_2") then
+						local navigation_extension = bb.navigation_extension
+
+						navigation_extension:add_movement_modifier(0.35 + math.random() * 0.2)
+					end
+				end
+
+				local t = Managers.time:time("game")
+
+				commander_ext:add_controlled_unit(pet_unit, template_name, t)
+				self:_extract_resummon_data(pet_unit, template_name)
+			end
+		end,
+	}
+	local fp_rotation_flat
+
+	if self._first_person_extension then
+		fp_rotation_flat = self._first_person_extension:current_rotation()
+		fp_rotation_flat = Quaternion.look(Vector3.flat(Quaternion.forward(fp_rotation_flat)), Vector3.up())
+	else
+		local game_object_id = self._unit_storage:go_id(necromancer_unit)
+		local game = Managers.state.network:game()
+		local aim_direction = GameSession.game_object_field(game, game_object_id, "aim_direction")
+
+		fp_rotation_flat = Quaternion.look(Vector3.flat(aim_direction), Vector3.up())
+	end
+
+	if position_mode == NecromancerPositionModes.Relative then
+		position = POSITION_LOOKUP[necromancer_unit] + Quaternion.rotate(fp_rotation_flat, position)
+	end
+
+	local nav_world = self._nav_world
+	local unit_is_on_navmesh, z = GwNavQueries.triangle_from_position(nav_world, position, 2, 2)
+
+	if unit_is_on_navmesh then
+		position.z = z
+	else
+		position = GwNavQueries.inside_position_from_outside_position(nav_world, position, 2, 2, 5, 1)
+	end
+
+	if not position then
+		return false
+	end
+
+	queued_pets[optional_data] = Managers.state.conflict:spawn_queued_unit(breed, Vector3Box(position), QuaternionBox(fp_rotation_flat), spawn_category, nil, nil, optional_data)
+	self._num_queued_pets = self._num_queued_pets + 1
+
+	return true
+end)
+mod:echo("done 2")
