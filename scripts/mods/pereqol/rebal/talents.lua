@@ -156,137 +156,137 @@ mod.rebal_changes = function(self)
 
     -- THP changes 
 
-    pmod:add_proc_function("cringemod_heal_crit_headshot_on_melee", function (owner_unit, buff, params)
-        if not Managers.state.network.is_server then
-            return
-        end
+    -- pmod:add_proc_function("cringemod_heal_crit_headshot_on_melee", function (owner_unit, buff, params)
+    --     if not Managers.state.network.is_server then
+    --         return
+    --     end
 
-        local heal_amount_crit = 2.5
-        local heal_amount_hs = 2
-        local has_procced = buff.has_procced
-        local hit_unit = params[1]
-        local hit_zone_name = params[3]
-        local target_number = params[4]
-        local attack_type = params[2]
-        local critical_hit = params[6]
-        local breed = AiUtils.unit_breed(hit_unit)
+    --     local heal_amount_crit = 2.5
+    --     local heal_amount_hs = 2
+    --     local has_procced = buff.has_procced
+    --     local hit_unit = params[1]
+    --     local hit_zone_name = params[3]
+    --     local target_number = params[4]
+    --     local attack_type = params[2]
+    --     local critical_hit = params[6]
+    --     local breed = AiUtils.unit_breed(hit_unit)
 
-        if target_number == 1 then
-            buff.has_procced = false
-            has_procced = false
-        end
+    --     if target_number == 1 then
+    --         buff.has_procced = false
+    --         has_procced = false
+    --     end
 
-        if ALIVE[owner_unit] and breed and (attack_type == "light_attack" or attack_type == "heavy_attack") and not has_procced then
-            if hit_zone_name == "head" or hit_zone_name == "neck" or hit_zone_name == "weakspot" then
-                buff.has_procced = true
+    --     if ALIVE[owner_unit] and breed and (attack_type == "light_attack" or attack_type == "heavy_attack") and not has_procced then
+    --         if hit_zone_name == "head" or hit_zone_name == "neck" or hit_zone_name == "weakspot" then
+    --             buff.has_procced = true
 
-                DamageUtils.heal_network(owner_unit, owner_unit, heal_amount_hs, "heal_from_proc")
-            end
+    --             DamageUtils.heal_network(owner_unit, owner_unit, heal_amount_hs, "heal_from_proc")
+    --         end
 
-            if critical_hit then
-                DamageUtils.heal_network(owner_unit, owner_unit, heal_amount_crit, "heal_from_proc")
+    --         if critical_hit then
+    --             DamageUtils.heal_network(owner_unit, owner_unit, heal_amount_crit, "heal_from_proc")
 
-                buff.has_procced = true
-            end
-        end
-    end)
+    --             buff.has_procced = true
+    --         end
+    --     end
+    -- end)
 
 
-    pmod:add_buff_template("cringemod_regrowth", {
-        name = "regrowth",
-        event_buff = true,
-        buff_func = "cringemod_heal_crit_headshot_on_melee",
-        event = "on_hit",
-        perks = { buff_perks.ninja_healing },
-    })
+    -- pmod:add_buff_template("cringemod_regrowth", {
+    --     name = "regrowth",
+    --     event_buff = true,
+    --     buff_func = "cringemod_heal_crit_headshot_on_melee",
+    --     event = "on_hit",
+    --     perks = { buff_perks.ninja_healing },
+    -- })
 
-    pmod:add_proc_function("cringemod_heal_damage_targets_on_melee", function (owner_unit, buff, params, world, param_order)
-        if not Managers.state.network.is_server then
-            return
-        end
+    -- pmod:add_proc_function("cringemod_heal_damage_targets_on_melee", function (owner_unit, buff, params, world, param_order)
+    --     if not Managers.state.network.is_server then
+    --         return
+    --     end
 
-        if not ALIVE[owner_unit] then
-            return
-        end
+    --     if not ALIVE[owner_unit] then
+    --         return
+    --     end
 
-        local attack_type = params[param_order.buff_attack_type]
+    --     local attack_type = params[param_order.buff_attack_type]
 
-        if not attack_type or attack_type ~= "light_attack" and attack_type ~= "heavy_attack" then
-            return
-        end
+    --     if not attack_type or attack_type ~= "light_attack" and attack_type ~= "heavy_attack" then
+    --         return
+    --     end
 
-        local hit_unit = params[param_order.attacked_unit]
-        local breed = AiUtils.unit_breed(hit_unit)
+    --     local hit_unit = params[param_order.attacked_unit]
+    --     local breed = AiUtils.unit_breed(hit_unit)
 
-        if not breed then
-            return
-        end
+    --     if not breed then
+    --         return
+    --     end
 
-        local damage_amount = params[param_order.damage_amount]
+    --     local damage_amount = params[param_order.damage_amount]
 
-        if damage_amount > 0 then
-            local buff_template = buff.template
-            local max_targets = buff_template.max_targets
-            local target_number = params[param_order.target_index]
+    --     if damage_amount > 0 then
+    --         local buff_template = buff.template
+    --         local max_targets = buff_template.max_targets
+    --         local target_number = params[param_order.target_index]
 
-            if target_number and target_number <= max_targets then
-                local heal_amount = 1
+    --         if target_number and target_number <= max_targets then
+    --             local heal_amount = 1
 
-                DamageUtils.heal_network(owner_unit, owner_unit, heal_amount, "heal_from_proc")
-            end
-        end
-    end)
+    --             DamageUtils.heal_network(owner_unit, owner_unit, heal_amount, "heal_from_proc")
+    --         end
+    --     end
+    -- end)
 
-    pmod:add_buff_template("cringemod_cleave_thp", {
-        bonus = 0.25,
-        buff_func = "heal_damage_targets_on_melee",
-        event = "on_player_damage_dealt",
-        max_targets = 5,
-        multiplier = -0.05,
-        name = "reaper",
-        perks = {
-            buff_perks.linesman_healing,
-        }
-    })  
+    -- pmod:add_buff_template("cringemod_cleave_thp", {
+    --     bonus = 0.25,
+    --     buff_func = "heal_damage_targets_on_melee",
+    --     event = "on_player_damage_dealt",
+    --     max_targets = 5,
+    --     multiplier = -0.05,
+    --     name = "reaper",
+    --     perks = {
+    --         buff_perks.linesman_healing,
+    --     }
+    -- })  
 
-    local hit_thp_talents = {
-        es_mercenary = 1,
-        es_huntsman = 3,
-        dr_ranger = 2,
-        dr_slayer = 1,
-        we_waywatcher = 2,
-        we_shade = 3,
-        we_thornsister = 2,
-        wh_captain = 2,
-        wh_bountyhunter = 3,
-        wh_zealot = 1,
-        bw_scholar = 1,
-        es_knight = 2,
-        es_questingknight = 3,
-        dr_ironbreaker = 3,
-        dr_engineer = 2,
-        we_maidenguard = 1,
-        bw_adept = 3,
-        bw_unchained = 2,
-        bw_necromancer = 1,
-        wh_priest = 2,
-    }
-    for career, column in pairs(hit_thp_talents) do
-        local success, err = pcall(function()  
-            mod:modify_talent(career, 1, column, {
-                name = "cringemod_cleave_thp_name",
-                description = "cringemod_cleave_thp_desc",
-                buffs = {
-                    "cringemod_cleave_thp"
-                }
-            })
-        end)
-        if not success then
-            mod:echo("modifying thp talent failed %s powerup failed %s", career, err)
-        end
-    end
+    -- local hit_thp_talents = {
+    --     es_mercenary = 1,
+    --     es_huntsman = 3,
+    --     dr_ranger = 2,
+    --     dr_slayer = 1,
+    --     we_waywatcher = 2,
+    --     we_shade = 3,
+    --     we_thornsister = 2,
+    --     wh_captain = 2,
+    --     wh_bountyhunter = 3,
+    --     wh_zealot = 1,
+    --     bw_scholar = 1,
+    --     es_knight = 2,
+    --     es_questingknight = 3,
+    --     dr_ironbreaker = 3,
+    --     dr_engineer = 2,
+    --     we_maidenguard = 1,
+    --     bw_adept = 3,
+    --     bw_unchained = 2,
+    --     bw_necromancer = 1,
+    --     wh_priest = 2,
+    -- }
+    -- for career, column in pairs(hit_thp_talents) do
+    --     local success, err = pcall(function()  
+    --         mod:modify_talent(career, 1, column, {
+    --             name = "cringemod_cleave_thp_name",
+    --             description = "cringemod_cleave_thp_desc",
+    --             buffs = {
+    --                 "cringemod_cleave_thp"
+    --             }
+    --         })
+    --     end)
+    --     if not success then
+    --         mod:echo("modifying thp talent failed %s powerup failed %s", career, err)
+    --     end
+    -- end
     
-    BuffTemplates.peregrinaje_linesman.buffs[1].multiplier = 0
+    -- BuffTemplates.peregrinaje_linesman.buffs[1].multiplier = 0
 
     mod:dofile("scripts/mods/pereqol/rebal/weapons")
     mod:dofile("scripts/mods/pereqol/rebal/boons")
