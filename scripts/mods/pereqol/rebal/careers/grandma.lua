@@ -16,9 +16,9 @@ mod:modify_talent("bw_necromancer", 5, 2, {
     },
 })
 
--- 6-2 give it 35 % cooldown
+-- 6-2 give it 25 % cooldown
 mod:add_talent_buff_template("bright_wizard", "sienna_necromancer_6_2_cdr", {
-    multiplier = -0.35,
+    multiplier = -0.25,
     stat_buff = "activated_cooldown",
 })
 mod:modify_talent("bw_necromancer", 6, 2, {

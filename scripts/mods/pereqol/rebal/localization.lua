@@ -5,7 +5,6 @@ mod:add_text("huntsman_pinpoint_accuracy_desc", "Makes all ranged attacks pin po
 mod:add_text("multishoot_description", "Your ranged attacks fire 2 additional projectiles, but your power, attack speed, and reload speed with ranged weapons is reduced by 15%.")
 mod:add_text("slower_description", "Power increased by 45%. Attack and reload speed decreased by 15%.")
 mod:add_text("description_attack_speed_per_coins", "Attack speed increases by 1% for every 400 coins that you have, up to 127%.")
---mod:add_text("weave_agile_desc", "Does fuck all, no more meowing you furry.")
 mod:add_text("cringemod_regrowth_name", "Crit/HS Thp")
 mod:add_text("cringemod_cleave_thp_name", "Multi Hit Thp")
 mod:add_text("cringemod_cleave_thp_desc", "You gain 1 temp health when hitting an enemy, up to 5 enemies per attack.")

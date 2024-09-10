@@ -91,8 +91,6 @@ mod.rebal_changes = function(self)
     local pmod = get_mod("Peregrinaje")
     local buff_perks = require("scripts/unit_extensions/default_player_unit/buffs/settings/buff_perk_names")
 
-    -- BuffTemplates.weave_agile.buffs = {} -- disable cat as its used just for getting out of bounds 90% of the time
-
     -- local function add_buff_template(buff_name, buff_data)   
     --     local new_talent_buff = {
     --         buffs = {
