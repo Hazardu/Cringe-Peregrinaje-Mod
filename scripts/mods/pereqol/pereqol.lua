@@ -74,6 +74,7 @@ mod.reserve_space_for_talent = function (talent_name, career_name, row, _icon, _
     return column
 end
 
+mod:dofile("scripts/mods/pereqol/unlock_athanor")
 mod:dofile("scripts/mods/pereqol/map_patch_utils")
 mod:dofile("scripts/mods/pereqol/map_patches")
 mod:dofile("scripts/mods/pereqol/rebal/more_talents")
@@ -177,6 +178,7 @@ local updateFrames = 0
 mod.update = function(dt)
 	if mod.loaded == false then
 		local pmod = get_mod("Peregrinaje")
+        mod.set_unlock_levels() -- just spam this function until it works lmao
 		if pmod then
 			if pmod["player_stats"] then 
 				local ps = pmod["player_stats"]
