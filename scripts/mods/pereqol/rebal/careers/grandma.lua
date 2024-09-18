@@ -16,9 +16,9 @@ mod:modify_talent("bw_necromancer", 5, 2, {
     },
 })
 
--- 6-2 give it 25 % cooldown
+-- 6-2 give it 30 % cooldown
 mod:add_talent_buff_template("bright_wizard", "sienna_necromancer_6_2_cdr", {
-    multiplier = -0.25,
+    multiplier = -0.30,
     stat_buff = "activated_cooldown",
 })
 mod:modify_talent("bw_necromancer", 6, 2, {
@@ -30,7 +30,7 @@ mod:modify_talent("bw_necromancer", 6, 2, {
 
 mod:add_talent_buff_template("bright_wizard", "cringe_necromancer_power_level_decreased", {
     stat_buff = "power_level",
-    multiplier = -0.25
+    multiplier = -0.20
     })
 table.insert(PassiveAbilitySettings.bw_necromancer.buffs, "cringe_necromancer_power_level_decreased")
 mod:add_talent_buff_template("bright_wizard", "cringe_necromancer_attack_speed_decreased", {

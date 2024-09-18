@@ -305,13 +305,14 @@ Weapons.two_handed_spears_elf_template_1.actions.action_one.light_attack_stab_1.
 Weapons.two_handed_spears_elf_template_1.actions.action_one.light_attack_stab_1.damage_window_end = 0.34
 Weapons.two_handed_spears_elf_template_1.actions.action_one.light_attack_stab_2.damage_window_start = 0.19
 Weapons.two_handed_spears_elf_template_1.actions.action_one.light_attack_stab_2.damage_window_end = 0.33
-Weapons.two_handed_spears_elf_template_1.actions.action_one.heavy_attack_stab.additional_critical_strike_chance = 0.4
+Weapons.two_handed_spears_elf_template_1.actions.action_one.heavy_attack_stab.additional_critical_strike_chance = 0.30
 
 
 --Flail 
 Weapons.one_handed_flail_template_1.actions.action_one.light_attack_left.anim_time_scale = 1 * 1.25	-- 1.0
 Weapons.one_handed_flail_template_1.actions.action_one.light_attack_right.anim_time_scale = 1 * 1.35	-- 1.0
 Weapons.one_handed_flail_template_1.actions.action_one.light_attack_bopp.anim_time_scale = 1 * 1.3	-- 1.1
+
 --Light 1, 2, 3, 4 Movement Speed--
 Weapons.one_handed_flail_template_1.actions.action_one.light_attack_left.buff_data.external_multiplier = 0.9	-- 0.75
 Weapons.one_handed_flail_template_1.actions.action_one.light_attack_right.buff_data.external_multiplier = 0.9	--0.75
@@ -344,13 +345,6 @@ Weapons.repeating_pistol_template_1.ammo_data.ammo_per_reload = 16
 Weapons.brace_of_pistols_template_1.ammo_data.ammo_per_reload = 3
 
 Weapons.fencing_sword_template_1.max_fatigue_points = 4
-
---experimental, see how it behaves
-BuffTemplates.weave_traits_reduce_cooldown_on_crit_internal_cooldown.buffs[1].duration = 3
-BuffTemplates.traits_reduce_cooldown_on_crit_internal_cooldown.buffs[1].duration = 3
-
-ExplosionTemplates.hammer_book_charged_impact_explosion_dash.explosion.radius_min = 0.3
-ExplosionTemplates.hammer_book_charged_impact_explosion_dash.explosion.radius_max = 0.5
 
 Weapons.two_handed_swords_template_1.actions.action_one.light_attack_bopp.anim_time_scale = 1.3
 Weapons.two_handed_swords_template_1.actions.action_one.push.fatigue_cost = "action_stun_push"
@@ -467,18 +461,6 @@ DamageProfileTemplates.priest_hammer_blunt_smiter.armor_modifier.attack[6] = 1.2
 DamageProfileTemplates.priest_hammer_blunt_smiter.critical_strike.attack_armor_power_modifer[2] = 1.8
 
 DamageProfileTemplates.light_slashing_smiter_finesse.shield_break = true
-
-Weapons.two_handed_halberds_template_1.actions.action_one.default_last.allowed_chain_actions[2].start_time = 0.4 -- 0.5
-Weapons.two_handed_halberds_template_1.actions.action_one.default_last.allowed_chain_actions[5].end_time = 1 --1.4
-Weapons.two_handed_halberds_template_1.actions.action_one.default_last.allowed_chain_actions[6].start_time =  0.6--0.7
-
-Weapons.two_handed_halberds_template_1.actions.action_one.default.allowed_chain_actions[2].start_time = 0.4
-Weapons.two_handed_halberds_template_1.actions.action_one.default.allowed_chain_actions[5].end_time = 1 -- 1.4
-Weapons.two_handed_halberds_template_1.actions.action_one.default.allowed_chain_actions[6].start_time = 0.6 -- 0.7
-Weapons.two_handed_halberds_template_1.actions.action_one.heavy_attack_stab.anim_time_scale = 1.25
-Weapons.two_handed_halberds_template_1.actions.action_one.heavy_attack_stab.range_mod = 1.45
-
-
 
 
 apply_weapon_changes()
