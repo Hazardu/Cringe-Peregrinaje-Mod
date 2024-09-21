@@ -24,6 +24,5 @@ mod:hook(BackendInterfaceWeavesPlayFab, "get_mastery", function (func, self, car
 	local total_cost = loadout and self:_get_loadout_mastery_cost(loadout) or 0
 	local current_mastery = initial_mastery - total_cost
 
-    mod:echo("initial mastery = " .. initial_mastery .. "\ncurrent mastery = " .. current_mastery)
 	return initial_mastery, current_mastery
 end)
