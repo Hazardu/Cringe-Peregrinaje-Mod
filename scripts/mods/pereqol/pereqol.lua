@@ -178,7 +178,6 @@ local updateFrames = 0
 mod.update = function(dt)
 	if mod.loaded == false then
 		local pmod = get_mod("Peregrinaje")
-        mod.set_unlock_levels() -- just spam this function until it works lmao
 		if pmod then
 			if pmod["player_stats"] then 
 				local ps = pmod["player_stats"]
