@@ -74,6 +74,7 @@ mod.reserve_space_for_talent = function (talent_name, career_name, row, _icon, _
     return column
 end
 
+mod:dofile("scripts/mods/pereqol/stagger")
 mod:dofile("scripts/mods/pereqol/unlock_athanor")
 mod:dofile("scripts/mods/pereqol/map_patch_utils")
 mod:dofile("scripts/mods/pereqol/map_patches")
