@@ -17,4 +17,6 @@ mod:add_text("kerillian_waywatcher_passive_restore_ammo_desc", "Amaranthe also r
 mod:add_text("victor_bountyhunter_activated_ability_blast_shotgun_desc", "Modifies Victor's sidearm to fire two blasts of shield-penetrating pellets in a devastating cone. Reduces cooldown of Locked and Loaded by 10%%. Gain 5%% ammo on ranged citical hit.")
 mod:add_text("cringe_career_passive_name_necro", "Divine Punishment")
 mod:add_text("cringe_career_passive_desc_necro", "For betraying Myrmidia and changing the school of magic, the necrotic cold weakened Sienna's body. Power reduced by 20%. Attack speed reduced by 10%. However, she can command powerful skeletons.")
+mod:add_text("weave_no_crit_power_desc", "Hitting an enemy grants a stack of 2% increased melee damage, maximum 15 stacks. Critically hitting an enemy removes 5 stacks.")
+mod:add_text("career_passive_desc_wh_1a", "Gains 5% increased power for every 28 hp missing.")
 mod:echo("Added cringe to your pere")

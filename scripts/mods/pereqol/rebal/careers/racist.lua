@@ -49,4 +49,9 @@ mod.init_victor = function(self)
             }
         },
     })
+
+    TalentBuffTemplates.witch_hunter.victor_zealot_passive_increased_damage.buffs[1].chunk_size = 28
+    TalentBuffTemplates.witch_hunter.victor_zealot_passive_move_speed.buffs[1].chunk_size = 28
+    TalentBuffTemplates.witch_hunter.victor_zealot_passive_healing_received.buffs[1].chunk_size = 28
+    TalentBuffTemplates.witch_hunter.victor_zealot_passive_damage_taken.buffs[1].chunk_size = 28
 end

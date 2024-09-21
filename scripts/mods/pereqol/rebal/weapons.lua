@@ -354,11 +354,11 @@ Weapons.two_handed_axes_template_2.actions.action_one.light_attack_left.anim_tim
 Weapons.two_handed_axes_template_2.actions.action_one.light_attack_bopp.anim_time_scale = 1.2
 
 -- 1h axe
-Weapons.one_hand_axe_template_1.actions.action_one.light_attack_last.anim_time_scale = 1.25 --1.035
-Weapons.one_hand_axe_template_2.actions.action_one.light_attack_last.anim_time_scale = 1.25 --1.035
+Weapons.one_hand_axe_template_1.actions.action_one.light_attack_last.anim_time_scale = 1.3 --1.035
+Weapons.one_hand_axe_template_2.actions.action_one.light_attack_last.anim_time_scale = 1.3 --1.035
 Weapons.one_hand_axe_template_1.actions.action_one.heavy_attack_left.range_mod = 1.2 --1
-Weapons.one_hand_axe_template_1.actions.action_one.heavy_attack_right.range_mod = 1.15 --1
-Weapons.one_hand_axe_template_2.actions.action_one.heavy_attack_left.range_mod = 1.15 --1
+Weapons.one_hand_axe_template_1.actions.action_one.heavy_attack_right.range_mod = 1.2 --1
+Weapons.one_hand_axe_template_2.actions.action_one.heavy_attack_left.range_mod = 1.2 --1
 Weapons.one_hand_axe_template_2.actions.action_one.heavy_attack_right.range_mod = 1.2 --1
 Weapons.one_hand_axe_template_1.actions.action_one.light_attack_last.damage_profile = "light_1h_axe_cringe"
 Weapons.one_hand_axe_template_2.actions.action_one.light_attack_last.damage_profile = "light_1h_axe_cringe"
@@ -453,14 +453,175 @@ NewDamageProfileTemplates.light_1h_axe_cringe = {
     },
 }
 
-Weapons.two_handed_hammers_template_1.actions.action_one.heavy_attack_right.anim_time_scale = 1.15
-Weapons.two_handed_hammers_template_1.actions.action_one.heavy_attack_left.anim_time_scale = 1.15
+Weapons.two_handed_hammers_template_1.actions.action_one.heavy_attack_right.anim_time_scale = 1.22
+Weapons.two_handed_hammers_template_1.actions.action_one.heavy_attack_left.anim_time_scale = 1.22
 DamageProfileTemplates.priest_hammer_heavy_blunt_tank_upper.targets[2].power_distribution.attack = 0.1
 DamageProfileTemplates.priest_hammer_blunt_smiter.armor_modifier.attack[2] = 2.025
 DamageProfileTemplates.priest_hammer_blunt_smiter.armor_modifier.attack[6] = 1.2
 DamageProfileTemplates.priest_hammer_blunt_smiter.critical_strike.attack_armor_power_modifer[2] = 1.8
 
+-- 1h sword
+Weapons.one_handed_swords_template_1.dodge_count = 4
 DamageProfileTemplates.light_slashing_smiter_finesse.shield_break = true
+Weapons.one_handed_swords_template_1.actions.action_one.light_attack_last.range_mod = 1.4 --1.2
+Weapons.one_handed_swords_template_1.actions.action_one.light_attack_left.damage_profile = "tb_1h_sword_light_1_2"
+Weapons.one_handed_swords_template_1.actions.action_one.light_attack_right.damage_profile = "tb_1h_sword_light_1_2"
+NewDamageProfileTemplates.tb_1h_sword_light_1_2 = {
+	armor_modifier = {
+		attack = {
+			1,
+			0,
+			2,
+			1,
+			1
+		},
+		impact = {
+			1,
+			0.3,
+			0.5,
+			1,
+			1
+		}
+	},
+	critical_strike = {
+		attack_armor_power_modifer = {
+			1,
+			0.5,
+			2.5,
+			1,
+			1
+		},
+		impact_armor_power_modifer = {
+			1,
+			0.5,
+			0.5,
+			1,
+			1
+		}
+	},
+	charge_value = "light_attack",
+	cleave_distribution = {
+		attack = 0.35,
+		impact = 0.2
+	},
+	default_target = {
+		boost_curve_type = "linesman_curve",
+		attack_template = "light_slashing_linesman",
+		power_distribution = {
+			attack = 0.125,
+			impact = 0.05
+		}
+	},
+	targets = {
+		{
+			boost_curve_coefficient_headshot = 2,
+			boost_curve_type = "ninja_curve",
+			boost_curve_coefficient = 2,
+			attack_template = "light_slashing_linesman_hs",
+			power_distribution = {
+				attack = 0.2,
+				impact = 0.1
+			}
+		},
+		{
+			boost_curve_type = "ninja_curve",
+			boost_curve_coefficient_headshot = 2,
+			attack_template = "light_slashing_linesman",
+			power_distribution = {
+				attack = 0.15,
+				impact = 0.075
+			}
+		}
+	},
+}
+
+
+--Heavies
+DamageProfileTemplates.medium_slashing_tank_1h_finesse.targets[1].armor_modifier.attack = {	1, 0.65, 2, 1, 0.75 }  --{ 1, 0.5, 1, 1, 0.75 }
+DamageProfileTemplates.medium_slashing_tank_1h_finesse.targets[1].boost_curve_type = "ninja_curve"
+DamageProfileTemplates.medium_slashing_tank_1h_finesse.targets[1].boost_curve_coefficient_headshot = 1.5
+DamageProfileTemplates.medium_slashing_tank_1h_finesse.targets[1].power_distribution.attack = 0.35 --0.3
+DamageProfileTemplates.medium_slashing_tank_1h_finesse.targets[2].power_distribution.attack = 0.175 --0.1
+DamageProfileTemplates.medium_slashing_tank_1h_finesse.targets[3].power_distribution.attack = 0.1
+Weapons.one_handed_swords_template_1.actions.action_one.heavy_attack_left.range_mod = 1.4 --1.25
+Weapons.one_handed_swords_template_1.actions.action_one.heavy_attack_right.range_mod = 1.4 --1.25
+DamageProfileTemplates.medium_slashing_tank_1h_finesse.cleave_distribution = "cleave_distribution_tank_L"
+DamageProfileTemplates.medium_slashing_tank_1h_finesse.critical_strike = "critical_strike_stab_smiter_H"
+
+--Falchion
+Weapons.one_hand_falchion_template_1.actions.action_one.light_attack_left.damage_profile = "tb_falchion_lights"
+Weapons.one_hand_falchion_template_1.actions.action_one.light_attack_right.damage_profile = "tb_falchion_lights"
+Weapons.one_hand_falchion_template_1.actions.action_one.light_attack_bopp.damage_profile = "tb_falchion_lights"
+Weapons.one_hand_falchion_template_1.actions.action_one.light_attack_down.damage_profile = "light_slashing_smiter_finesse"
+
+NewDamageProfileTemplates.tb_falchion_lights = {
+	armor_modifier = {
+		attack = {
+			1,
+			0.2,
+			2,
+			1,
+			1
+		},
+		impact = {
+			1,
+			0.3,
+			0.5,
+			1,
+			1
+		}
+	},
+	critical_strike = {
+		attack_armor_power_modifer = {
+			1,
+			0.5,
+			2,
+			1,
+			1
+		},
+		impact_armor_power_modifer = {
+			1,
+			0.5,
+			0.5,
+			1,
+			1
+		}
+	},
+	charge_value = "light_attack",
+	cleave_distribution = {
+		attack = 0.3,
+		impact = 0.2
+	},
+	default_target = {
+		boost_curve_type = "linesman_curve",
+		attack_template = "light_slashing_linesman",
+		power_distribution = {
+			attack = 0.125,
+			impact = 0.05
+		}
+	},
+	targets = {
+		{
+			boost_curve_coefficient_headshot = 2,
+			boost_curve_type = "ninja_curve",
+			boost_curve_coefficient = 2,
+			attack_template = "light_slashing_linesman_hs",
+			power_distribution = {
+				attack = 0.2,
+				impact = 0.1
+			}
+		},
+		{
+			boost_curve_type = "ninja_curve",
+			boost_curve_coefficient_headshot = 2,
+			attack_template = "light_slashing_linesman",
+			power_distribution = {
+				attack = 0.15,
+				impact = 0.075
+			}
+		}
+	},
+}
 
 
 apply_weapon_changes()

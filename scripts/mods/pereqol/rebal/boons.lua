@@ -21,6 +21,7 @@ DeusPowerUpTemplates.boon_careerskill_01.buff_template.buffs[1].area_radius = 3
 DeusPowerUpTemplates.boon_careerskill_02.buff_template.buffs[1].area_radius = 3
 DeusPowerUpTemplates.boon_careerskill_03.buff_template.buffs[1].area_radius = 3
 DeusPowerUpTemplates.boon_careerskill_04.buff_template.buffs[1].area_radius = 3
+
 DeusPowerUpBuffTemplates.boon_career_ability_burning_aoe.buffs[1].time_between_dot_damages = 1
 DeusPowerUpBuffTemplates.boon_career_ability_poison_aoe.buffs[1].time_between_dot_damages = 1
 DeusPowerUpBuffTemplates.boon_career_ability_bleed_aoe.buffs[1].time_between_dot_damages = 1
@@ -28,3 +29,5 @@ DeusPowerUpBuffTemplates.boon_career_ability_burning_aoe.buffs[1].update_start_d
 DeusPowerUpBuffTemplates.boon_career_ability_poison_aoe.buffs[1].update_start_delay = 1
 DeusPowerUpBuffTemplates.boon_career_ability_bleed_aoe.buffs[1].update_start_delay = 1
 
+-- powerful obliterate weapon trait 5%->2%
+BuffTemplates.weave_no_crit_power_buff.buffs[1].multiplier = 0.02
