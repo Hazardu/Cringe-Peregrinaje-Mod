@@ -13,14 +13,8 @@ BuffTemplates.power_up_slower_common.buffs[1].multiplier = -0.15
 BuffTemplates.power_up_slower_common.buffs[2].multiplier = 0.45
 BuffTemplates.power_up_slower_common.buffs[3].multiplier = 0.15
 
-BuffTemplates.power_up_attack_speed_per_coins_rare.buffs[1].value = 0.000025
+BuffTemplates.power_up_attack_speed_per_coins_rare.buffs[1].value = 0.00005
 BuffTemplates.power_up_attack_speed_per_coins_rare.buffs[1].update_frequency = 3
-
-DeusPowerUpTemplates.boon_dot_burning_01.buff_template.buffs[1].area_radius = 0.4
-DeusPowerUpTemplates.boon_careerskill_01.buff_template.buffs[1].area_radius = 3
-DeusPowerUpTemplates.boon_careerskill_02.buff_template.buffs[1].area_radius = 3
-DeusPowerUpTemplates.boon_careerskill_03.buff_template.buffs[1].area_radius = 3
-DeusPowerUpTemplates.boon_careerskill_04.buff_template.buffs[1].area_radius = 3
 
 DeusPowerUpBuffTemplates.boon_career_ability_burning_aoe.buffs[1].time_between_dot_damages = 1
 DeusPowerUpBuffTemplates.boon_career_ability_poison_aoe.buffs[1].time_between_dot_damages = 1

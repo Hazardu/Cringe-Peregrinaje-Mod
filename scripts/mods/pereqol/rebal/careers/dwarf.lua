@@ -41,16 +41,16 @@ mod.init_dwarf = function(self)
 
 
 
-    -- mod:add_talent_buff_template("dwarf_ranger", "gs_bardin_slayer_increased_defence", {
-    --     stat_buff = "damage_taken",
-    --     multiplier = -0.10
-    -- })
+    mod:add_talent_buff_template("dwarf_ranger", "gs_bardin_slayer_increased_defence", {
+        stat_buff = "damage_taken",
+        multiplier = -0.10
+    })
 
-    -- table.insert(PassiveAbilitySettings.dr_2.buffs, "gs_bardin_slayer_increased_defence")
-    -- PassiveAbilitySettings.dr_2.perks[1] = {
-    --     display_name = "rebaltourn_career_passive_name_dr_2d",
-    --     description = "rebaltourn_career_passive_desc_dr_2d_2"
-    -- }
+    table.insert(PassiveAbilitySettings.dr_2.buffs, "gs_bardin_slayer_increased_defence")
+    PassiveAbilitySettings.dr_2.perks[1] = {
+        display_name = "rebaltourn_career_passive_name_dr_2d",
+        description = "rebaltourn_career_passive_desc_dr_2d_2"
+    }
 
 
     pmod:add_buff_template("engi_2_1_cdr", {

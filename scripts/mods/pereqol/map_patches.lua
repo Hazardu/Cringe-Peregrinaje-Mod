@@ -57,8 +57,5 @@ mod.on_game_state_changed = function(status, state)
     if status == "enter" and state == "StateIngame" then
         spawn_cubes_for_levels()
     end
-
 end
-
-
 

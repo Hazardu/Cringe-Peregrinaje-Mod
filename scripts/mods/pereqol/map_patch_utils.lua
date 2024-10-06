@@ -23,9 +23,10 @@ local function spawn_package_to_player (package_name)
 
   if world and player and player.player_unit then
     local player_unit = player.player_unit
-
+    local camera_unit = player.camera_follow_unit
     local position = Unit.local_position(player_unit, 0) + Vector3(0, 0, 1)
-    local rotation = Unit.local_rotation(player_unit, 0)
+    local rotation = Unit.local_rotation(camera_unit, 0)
+
     storepos(position)
     storerot(rotation)
     mod.cubetype = package_name
@@ -103,11 +104,11 @@ end
 local dragging = false
 local dragOffsetBox = Vector3Box(Vector3(0,0,0))
 
-function mod.update(dt)
+function mod.update_cubes(dt)
   if mod.testcube then
     local player = Managers.player:local_player()
     local world = Managers.world:world("level_world")
-
+    local camera_unit = player.camera_follow_unit
     if world and player and player.player_unit then
       local player_unit = player.player_unit
       if Keyboard.button(Keyboard.button_index("1"))  > 0.5 then
@@ -126,7 +127,8 @@ function mod.update(dt)
       end
 
       if Keyboard.button(Keyboard.button_index("2")) > 0.5 then
-        local rotation = Unit.local_rotation(player_unit, 0)
+        local camera_unit = player.camera_follow_unit
+        local rotation = Unit.local_rotation(camera_unit, 0)
         Unit.set_local_rotation(mod.testcube, 0, rotation)
         storerot(rotation)
       end

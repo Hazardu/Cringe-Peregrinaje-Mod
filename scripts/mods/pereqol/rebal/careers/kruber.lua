@@ -7,7 +7,7 @@ mod.init_kruber = function(self)
     
     BuffTemplates.markus_knight_cooldown_buff.buffs[1].duration = 0.175
     BuffTemplates.markus_knight_cooldown_buff.buffs[1].multiplier = 4.5
-    BuffTemplates.markus_knight_cooldown_buff.buffs[1].max_stacks = 2
+    BuffTemplates.markus_knight_cooldown_buff.buffs[1].max_stacks = 5
     BuffTemplates.markus_knight_cooldown_buff.buffs[1].refresh_durations = false
     mod:modify_talent("es_knight", 5, 3, {
         description_values = {

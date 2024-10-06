@@ -1,3 +1,20 @@
+local mod = get_mod("pereqol")
+
+-- fix to clip size causing multiple reloads 
+mod:hook(GenericAmmoUserExtension, "init", function (func, self, extension_init_context, unit, extension_init_data)
+    func(self, extension_init_context, unit, extension_init_data)
+    self._original_ammo_per_reload = self._ammo_per_reload
+end)
+mod:hook(GenericAmmoUserExtension, "_apply_buffs", function (func, self)
+    func(self)
+    local buff_extension = ScriptUnit.extension(self.owner_unit, "buff_system")
+    self._original_ammo_per_reload = self._original_ammo_per_reload or self._ammo_per_reload
+    self._ammo_per_reload = math.ceil(buff_extension:apply_buffs_to_value(self._original_ammo_per_reload, "clip_size"))
+end)
+
+
+
+
 NewDamageProfileTemplates = NewDamageProfileTemplates or {}
 function apply_weapon_changes()
     for key, _ in pairs(NewDamageProfileTemplates) do
@@ -326,7 +343,8 @@ Weapons.we_deus_01_template_1.actions.action_one.default.total_time = 0.7
 Weapons.we_deus_01_template_1.actions.action_one.default.allowed_chain_actions[1].start_time =  0.4
 Weapons.we_deus_01_template_1.actions.action_one.shoot_charged.total_time = 0.55
 Weapons.we_deus_01_template_1.actions.action_one.shoot_charged.allowed_chain_actions[1].start_time = 0.45
-Weapons.we_deus_01_template_1.actions.action_one.shoot_special_charged.total_time = 0.5 Weapons.we_deus_01_template_1.actions.action_one.shoot_special_charged.allowed_chain_actions[1].start_time = 0.4
+Weapons.we_deus_01_template_1.actions.action_one.shoot_special_charged.total_time = 0.5 
+Weapons.we_deus_01_template_1.actions.action_one.shoot_special_charged.allowed_chain_actions[1].start_time = 0.4
 Weapons.bw_deus_01_template_1.actions.action_two.default.allowed_chain_actions[1].start_time = 0
 
 Weapons.javelin_template.actions.action_one.throw_charged.allowed_chain_actions[2].start_time = 0.3
@@ -341,8 +359,6 @@ Weapons.javelin_template.actions.action_one.chain_stab_03.allowed_chain_actions[
 Weapons.javelin_template.actions.action_one.heavy_stab.allowed_chain_actions[2].start_time = 0.45
 
 Weapons.repeating_pistol_template_1.dodge_count = 2
-Weapons.repeating_pistol_template_1.ammo_data.ammo_per_reload = 16
-Weapons.brace_of_pistols_template_1.ammo_data.ammo_per_reload = 3
 
 Weapons.fencing_sword_template_1.max_fatigue_points = 4
 
