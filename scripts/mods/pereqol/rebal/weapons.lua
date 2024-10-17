@@ -640,4 +640,10 @@ NewDamageProfileTemplates.tb_falchion_lights = {
 }
 
 
+Weapons.two_handed_axes_template_1.actions.action_one.heavy_attack_right.slide_armour_hit = true --nil
+Weapons.two_handed_axes_template_1.actions.action_one.heavy_attack_left.slide_armour_hit = true --nil
+Weapons.two_handed_axes_template_1.actions.action_one.heavy_attack_right.hit_mass_count = HEAVY_LINESMAN_HIT_MASS_COUNT --nil
+Weapons.two_handed_axes_template_1.actions.action_one.heavy_attack_left.hit_mass_count = HEAVY_LINESMAN_HIT_MASS_COUNT --nil
+Weapons.two_handed_axes_template_1.actions.action_one.light_attack_up.anim_time_scale = 0.9
+
 apply_weapon_changes()
